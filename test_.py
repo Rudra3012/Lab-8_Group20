@@ -1,14 +1,15 @@
-import unittest
+import pytest
 import json
 import requests
 
 from login_module import LoginPage
 
-class TestLogin(unittest.TestCase):
-    def test_login1(self):
-        response = LoginPage({'username': 'test', 'pass': 'test'})
-        self.assertEqual(response['message'], 'Login Successful')
-        
-        
-if __name__ == '__main__':
-    unittest.main()
+    
+def test_login1():
+    response = LoginPage({'username': 'Ruchir17', 'pass': 'ruchir123'})
+    assert response['message'] == 'Login Unsuccessful'
+
+def test_login():
+    response = LoginPage({'username': 'Ruchir17', 'pass': 'Ruchir123'})
+    assert response['message'] == 'Login Unsuccessful'
+
