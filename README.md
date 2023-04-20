@@ -92,7 +92,61 @@ With 2 wrong test cases: test case 2 and test case 5
 ![image](https://user-images.githubusercontent.com/107960916/233389060-f182ab4b-5459-432a-8fce-7f02b08b2f9a.png)
 
 
+### Login function code:
 
 
+def LoginPage(request):
+
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        pass1 = request.POST.get('pass')
+
+        if 4 < len(username) < 15:
+            for i in username:
+                if i == ' ':
+                    response = JsonResponse({'message': 'Login Unsuccessful'}, status=401)
+                    return response
+        else:
+            response = JsonResponse({'message': 'Login Unsuccessful'}, status=401)
+            return response
+
+        if 8 < len(pass1) < 24:
+            upperCase = False
+            lowerCase = False
+            number = False
+            special = False
+
+            for i in pass1:
+                if i == ' ':
+                    response = JsonResponse({'message': 'Login Unsuccessful'}, status=401)
+                    return response
+                if i.isupper():
+                    upperCase = True
+                if i.islower():
+                    lowerCase = True
+                if i.isdigit():
+                    number = True
+                if i in ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_', '+', '=', '{', '}', '[', ']', '|',
+                         ':', ';', '"', "'", '<', '>', ',', '.', '?', '/']:
+                    special = True
+            if upperCase and lowerCase and number and special:
+                pass
+            else:
+                response = JsonResponse({'message': 'Login Unsuccessful'}, status=401)
+                return response
+        else:
+            response = JsonResponse({'message': 'Login Unsuccessful'}, status=401)
+            return response
+
+        collections = db['crosswordApp_user']
+        reply = collections.find_one({"username": username})
+
+        # if username is not in database
+        if reply is None:
+            response = JsonResponse({'message': 'Login Unsuccessful'}, status=401)
+            return response
+
+        response = JsonResponse({'message': 'Login Successful'}, status=401)
+        return response
 
 
