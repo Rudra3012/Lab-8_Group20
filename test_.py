@@ -25,3 +25,7 @@ def test_login5():
     response = LoginPage({'username': 'Ruchir17', 'pass': 'Ruchir@123'})
     assert response['message'] == 'Login Successful'
 
+def test_login6():
+    response = LoginPage({'username': 'Ruchir 17', 'pass': 'Ruchir@123'})
+    assert response['message'] == 'Login Unsuccessful'
+
